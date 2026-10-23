@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ابن عز - الموديلات والفواتير</title>
+<meta name="theme-color" content="#d4007c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ابن عز">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;800&family=Cairo:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><img src="icon-192.png" alt="ابن عز لملابس الأطفال" width="56" height="56" style="border-radius:14px;box-shadow:0 3px 8px rgba(0,0,0,.25)"><h1 id="ttl">ابن عز لملابس الأطفال</h1></div>
+
+  <div id="v-models">
+    <header>
+      <div class="field">
+        <input id="q" type="search" enterkeyhint="search" autocomplete="off" placeholder="اكتب رقم الموديل" aria-label="رقم الموديل">
+        <button id="clr" type="button" aria-label="مسح" hidden>&times;</button>
+      </div>
+      <div class="meta"><span id="count"></span><span id="which">الأسعار بالجنيه</span></div>
+    </header>
+    <div class="chips" id="chips" role="group" aria-label="تصفية بالمصنع"></div>
+    <ul id="list"></ul>
+  </div>
+
+  <div id="v-inv" hidden>
+    <div class="subseg" role="group" aria-label="عرض الفواتير">
+      <button type="button" id="sub-cur" aria-pressed="true">الفاتورة</button>
+      <button type="button" id="sub-hist" aria-pressed="false">سجل الفواتير</button>
+    </div>
+    <div id="p-cur">
+      <div class="chips" id="invbar" role="group" aria-label="الفواتير المفتوحة"></div>
+      <div class="tools" id="tools">
+        <input id="cust" type="text" autocomplete="off" placeholder="اسم العميل (اختياري)" aria-label="اسم العميل">
+        <div class="seg" role="group" aria-label="سعر الفاتورة">
+          <button type="button" data-mode="sell" aria-pressed="true">بسعر البيع</button>
+          <button type="button" data-mode="whole" aria-pressed="false">بسعر الجملة</button>
+        </div>
+      </div>
+      <div id="inv"></div>
+      <textarea id="out" readonly hidden aria-label="نص الفاتورة"></textarea>
+    </div>
+    <div id="p-hist" hidden>
+      <input id="hq" type="search" autocomplete="off" placeholder="ابحث باسم العميل أو رقم الفاتورة" aria-label="بحث في الفواتير">
+      <div class="subseg" role="group" aria-label="الفترة">
+        <button type="button" id="h-today" aria-pressed="true">النهارده</button>
+        <button type="button" id="h-all" aria-pressed="false">الكل</button>
+      </div>
+      <button class="btn sec" id="hexp" type="button">تصدير الفواتير المعروضة (PDF)</button>
+      <div id="hist"></div>
+    </div>
+  </div>
+
+  <div id="v-set" hidden>
+    <section class="sec2">
+      <h2>الموديلات والأسعار</h2>
+      <p id="pinfo"></p>
+      <button class="btn" id="impbtn" type="button">تحديث الأسعار من ملف إكسل</button>
+      <input id="impf" type="file" accept=".xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" hidden>
+      <div id="imp"></div>
+      <p>الأعمدة المطلوبة: المصنع، رقم الموديل، سعر الجملة، سعر البيع. أي أعمدة تانية (زي الكمية) بتتجاهل.</p>
+    </section>
+    <section class="sec2">
+      <h2>النسخة الاحتياطية</h2>
+      <p>الفواتير والأسعار متخزنة على الموبايل ده بس. حمّل نسخة احتياطية من وقت للتاني.</p>
+      <div class="col">
+        <button class="btn" id="bk" type="button">تحميل نسخة احتياطية</button>
+        <button class="btn sec" id="rs" type="button">استرجاع نسخة احتياطية</button>
+        <button class="btn sec" id="pdf-today" type="button">تصدير فواتير النهارده (PDF)</button>
+        <button class="btn sec" id="pdf-all" type="button">تصدير كل الفواتير المقفولة (PDF)</button>
+      </div>
+      <input id="rsf" type="file" accept=".json,application/json" hidden>
+      <div id="rsmsg"></div>
+    </section>
+    <section class="sec2">
+      <h2>التطبيق</h2>
+      <button class="btn sec" id="inst" type="button" hidden>تثبيت التطبيق على الشاشة الرئيسية</button>
+      <button class="btn sec" id="diag" type="button">فحص التثبيت</button>
+      <div id="diagout"></div>
+      <p id="sw"></p>
+      <p id="st"></p>
+    </section>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite" hidden></div>
+
+<nav class="tabs" aria-label="التبويبات"><div class="tabs-in">
+  <button class="tab" id="tab-m" role="tab" aria-selected="true" type="button">الموديلات</button>
+  <button class="tab" id="tab-i" role="tab" aria-selected="false" type="button"><span>الفاتورة<span class="badge" id="tcount">0</span></span><small id="ttotal"></small></button>
+  <button class="tab" id="tab-s" role="tab" aria-selected="false" type="button">الإعدادات</button>
+</div></nav>
+<script src="app.js"></script>
+</body>
+</html>
